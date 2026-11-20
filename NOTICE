@@ -1,0 +1,14 @@
+Herdr Plus
+
+This project contains modified copies of the Herdr Desktop v0.1.16 main
+layout, Spaces mod, and Workspace Status mod, developed by the Herdr
+contributors and distributed under the Apache License, Version 2.0.
+
+Upstream: https://github.com/herdrdev/herdr-app/tree/v0.1.16
+Upstream sources: defaults/layouts/main.json, defaults/mods/spaces/,
+and defaults/mods/workspace-status/.
+
+Herdr Plus adds worktree folding and group summaries, per-space agent and
+Git indicators, and directory-scoped Git line counts. The installed Herdr
+app supplies its own runtime, built-in mods, and icon assets; this package
+does not redistribute them. See LICENSE for the full license text.
