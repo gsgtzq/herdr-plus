@@ -12,6 +12,7 @@ A community layout for [Herdr Desktop](https://herdr.dev/). It keeps the default
 | **Status at a glance** | An amber square marks uncommitted changes. A ring spins while an agent is working, `!` means blocked, and a dot marks done. Priority: blocked → working → done. |
 | **Live line counts** | Green `+` and red `−` show tracked text changes against `HEAD` under the focused terminal’s current directory, including staged and unstaged edits. |
 | **Machine usage** | The status bar follows the active workspace’s machine (macOS or Linux). It shows one-second CPU snapshots every three seconds while the window is active, plus the latest memory usage. Hover for CPU load, memory totals, home disk space, and uptime. |
+| **macOS Dock badge** | Counts blocked or finished agents you haven't viewed. Focus each agent’s terminal to clear its alert without clearing the others. |
 
 ![Close-up of the folded Spaces sidebar](screenshots/folded-worktrees.png)
 

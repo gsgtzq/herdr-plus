@@ -15,6 +15,7 @@ The machine name is followed by a compact CPU bar history and memory progress ba
 - Expanded rows report only their own state. A folded parent shows a single amber square if any checkout in the group has uncommitted changes, and its highest-priority agent state across all tabs and panes: blocked (`!`), working (animated ring), then done (solid dot). Idle has no badge. The parent’s Git branch and ahead/behind counts never include children.
 - The status bar follows the focused terminal, including the directory scope. It hides counts when no tracked text lines have changed, or when there is no Git checkout.
 - Usage follows the machine named in the status bar. The CPU history keeps 16 one-second snapshots, sampled every three seconds while the window is active. Memory shows the latest sample. Hover over either meter for logical core count, load averages, memory totals, home filesystem space and uptime.
+- On macOS, the Herdr Dock icon shows a red count of unread blocked or finished agents. Focusing a terminal in the active window clears only that terminal’s alert. A new blocked or finished episode can count again; leaving the layout clears its badge.
 
 ## Built from
 
@@ -22,6 +23,7 @@ The machine name is followed by a compact CPU bar history and memory progress ba
 - `mods/spaces-agent-status` groups spaces by machine and Git common directory, uses `agents()` for live status, and stores fold state locally. It reuses the shipped branch, chevron, and spinner assets. Git metadata comes from read-only `exec("git", …)` calls where each checkout lives; `watchFolder()` refreshes local data. The inherited sidebar uses `hc` to list and manage machines.
 - `mods/workspace-git-status` uses `focused()` to run a read-only, directory-scoped `git diff --numstat` on the terminal’s machine. It updates on focus or directory change and polls every five seconds while the window is active. Neither mod adds external network calls.
 - `host-usage.js` runs one read-only shell probe through `exec` on the displayed machine per sample. It uses `iostat` and `vm_stat` on macOS, `/proc` on Linux, and `df` for home filesystem space. No installer, background daemon, or external service is needed.
+- The status bar also uses `agents()` and `focused()` to track attention by terminal address and state sequence, and calls `setBadge()` only when the count changes. Keep previously observed completions until the individual terminal gets focus, even if Herdr marks all visible splits idle on tab entry.
 
 ## Watch out
 

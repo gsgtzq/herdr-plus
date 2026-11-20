@@ -3,7 +3,7 @@
 
 import { View, div, svg } from "gpui-kit";
 import { h_flex } from "gpui-base";
-import { spaces, agents, focused, exec, checking, theme, run, window, keys } from "herdr";
+import { spaces, agents, focused, exec, checking, theme, run, window, keys, setBadge } from "herdr";
 import { HostUsage } from "./host-usage.js";
 
 const READ = ["--no-optional-locks", "-c", "core.fsmonitor=false", "-c", "diff.autoRefreshIndex=false"];
@@ -46,6 +46,35 @@ export default class WorkspaceStatus extends View {
     if (checking()) return;
     this.hostUsage = new HostUsage(cx);
     cx.timer.every(5000, cx => { if (window()?.active) this.refresh(cx); });
+  }
+
+  updateDockBadge(list) {
+    const win = window();
+    if (win?.platform !== "macos" || checking()) return;
+    const f = win.active ? focused() : null;
+    const viewed = f?.shown ?? f?.terminal;
+    const attention = new Map();
+    let unread = 0;
+    for (const { address, status, seq } of list) {
+      const old = this.dockAttention?.get(address);
+      const same = old?.seq === seq && (old.status === status || (old.status === "done" && status === "idle"));
+      // Herdr can turn every visible split's done into idle at once.
+      // Keep those completions until each terminal actually gets focus.
+      if (status !== "blocked" && status !== "done" && !same) continue;
+      const entry = same ? old : { status, seq, seen: false };
+      entry.seen ||= address === viewed;
+      if (!entry.seen) unread++;
+      attention.set(address, entry);
+    }
+    this.dockAttention = attention;
+    const badge = unread ? String(unread) : null;
+    if (this.dockBadge === badge) return;
+    this.dockBadge = badge;
+    setBadge(badge);
+  }
+
+  close() {
+    if (this.dockBadge) setBadge(null);
   }
 
   refresh(cx) {
@@ -92,6 +121,7 @@ export default class WorkspaceStatus extends View {
     this.hostUsage?.follow(space?.machine ?? null, cx);
     const usage = this.hostUsage?.render(t);
     const list = agents();
+    this.updateDockBadge(list);
     const needs = list.filter(a => a.status === "blocked").length;
     const label = (icon, text) => h_flex().gap(6).items_center().child(svg(`mods/workspace-chrome/${icon}.svg`).size(13)).child(text);
     return h_flex().size_full().px(14).gap(16).items_center().bg(t.chrome).border_t(1).border_color(t.border).text_size(11.8).text_color(t.muted)
