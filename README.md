@@ -1,18 +1,21 @@
 # Herdr Plus
 
-**See what’s running and what changed without leaving your workspace.**
+**See what’s running, what changed, and how busy the machine is.**
 
 A community layout for [Herdr Desktop](https://herdr.dev/). It keeps the default layout familiar and replaces just the Spaces list and the bottom status bar.
 
-![Herdr Plus with expanded worktrees, agent badges, and line counts](preview.png)
+![Herdr Plus showing expanded worktrees, agent badges, CPU history, memory usage, and Git line counts](preview.png)
 
 | | What you get |
 |---|---|
 | **Foldable worktrees** | Fold a project without stopping its agents. The parent row shows whether anything changed and the most urgent agent status across the group. Branch and `↑/↓` still describe the parent checkout. |
 | **Status at a glance** | An amber square marks uncommitted changes. A ring spins while an agent is working, `!` means blocked, and a dot marks done. Priority: blocked → working → done. |
 | **Live line counts** | Green `+` and red `−` show tracked text changes against `HEAD` under the focused terminal’s current directory, including staged and unstaged edits. |
+| **Machine usage** | The status bar follows the active workspace’s machine (macOS or Linux). It shows one-second CPU snapshots every three seconds while the window is active, plus the latest memory usage. Hover for CPU load, memory totals, home disk space, and uptime. |
 
 ![Close-up of the folded Spaces sidebar](screenshots/folded-worktrees.png)
+
+![Close-up of CPU history, the memory meter, and Git line counts](screenshots/status-bar.png)
 
 ## Install
 
