@@ -9,6 +9,7 @@ A community layout for [Herdr Desktop](https://herdr.dev/). It keeps the default
 | | What you get |
 |---|---|
 | **Foldable worktrees** | Fold a project without stopping its agents. The parent row shows whether anything changed and the most urgent agent status across the group. Branch and `↑/↓` still describe the parent checkout. |
+| **Branch-based worktrees** | Right-click a Git Space: **New branch and worktree…** creates a branch from a local or fetched remote base; **Checkout existing branch…** creates only a worktree for a local branch. |
 | **Status at a glance** | An amber square marks uncommitted changes. A ring spins while an agent is working, `!` means blocked, and a dot marks done. Priority: blocked → working → done. |
 | **Live line counts** | Green `+` and red `−` show tracked text changes against `HEAD` under the focused terminal’s current directory, including staged and unstaged edits. |
 | **Machine usage** | The status bar follows the active workspace’s machine (macOS or Linux). It shows one-second CPU snapshots every three seconds while the window is active, plus the latest memory usage. Hover for CPU load, memory totals, home disk space, and uptime. |
