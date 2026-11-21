@@ -21,7 +21,17 @@ A community layout for [Herdr Desktop](https://herdr.dev/). It keeps the default
 
 ## Install
 
-Requires Git and Herdr Desktop (tested with **0.1.16**). Launch Herdr once before installing. You can also ask your agent to read `~/.config/herdr-app/AGENTS.md` and install the layout from this repository.
+Requires Git and Herdr Desktop (tested with **0.1.16**). Launch Herdr once before installing.
+
+### Ask your agent
+
+Copy this prompt into your coding agent:
+
+```text
+Read ~/.config/herdr-app/AGENTS.md, then install and activate the Herdr Plus layout from https://github.com/gsgtzq/herdr-plus without overwriting my existing customizations.
+```
+
+### Install manually
 
 ```sh
 git clone https://github.com/gsgtzq/herdr-plus.git
