@@ -339,6 +339,7 @@ export default class Spaces extends View {
     }
     const out = [];
     const placed = new Set(); // repos whose worktrees are listed (under the first of its spaces)
+    const parents = [];
     for (const r of list) {
       const repo = r.g?.repo;
       if (r.g?.linked && worktrees.has(repo)) continue;
@@ -346,7 +347,15 @@ export default class Spaces extends View {
       out.push({ ...r, tree: null, kids });
       if (!kids) continue;
       placed.add(repo);
-      for (const k of kids) out.push({ ...k, tree: true });
+      for (const k of kids) {
+        out.push({ ...k, tree: true });
+        parents.push([k.w.id, r.w.id]);
+      }
+    }
+    // Publish only IDs so Agents can reuse the tree without another Git scan.
+    const old = shared("herdr-plus.worktree-parents") ?? [];
+    if (old.length !== parents.length || parents.some(([id, parent], i) => id !== old[i]?.[0] || parent !== old[i]?.[1])) {
+      setShared("herdr-plus.worktree-parents", parents);
     }
     // Simulate the batch so later indexes include earlier moves. An attempted
     // write can lose a sync conflict: allow the echo to settle before retrying.
